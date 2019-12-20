@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="17dp"
+        android:text="Monitoring Events:" />
+
+    <EditText
+        android:id="@+id/monitoringText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:gravity="left|top"
+        android:inputType="textMultiLine">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:onClick="onRangingClicked"
+        android:layout_below="@+id/monitoringText"
+        android:text="Ranging" />
+
+    <Button
+        android:id="@+id/enableButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onEnableClicked"
+        android:layout_below="@+id/monitoringText"
+        android:layout_toRightOf="@id/Button01"
+        android:text="Disable monitoring" />
+
+    <Button
+        android:id="@+id/map_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/monitoringText"
+        android:layout_toRightOf="@id/enableButton"
+        android:onClick="onMapClicked"
+        android:text="Go Map" />
+
+
+
+    <EditText
+        android:id="@+id/x"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/enableButton"
+        android:inputType="numberDecimal"
+        android:hint="x" />
+
+    <EditText
+        android:id="@+id/y"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/enableButton"
+        android:layout_toEndOf="@id/x"
+        android:hint="y" />
+
+    <EditText
+        android:id="@+id/times"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/enableButton"
+        android:layout_toEndOf="@id/y"
+        android:hint="times" />
+
+
+    <EditText
+        android:id="@+id/scanmod"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/x"
+        android:inputType="numberDecimal"
+        android:hint="scanmod/1 or 0" />
+
+
+    <EditText
+        android:id="@+id/ScanPeriod"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_below="@id/enableButton"
+        android:layout_toEndOf="@id/times"
+        android:hint="period/ms" />
+
+
+    <EditText
+        android:id="@+id/BetweenScanPeriod"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/x"
+        android:layout_toEndOf="@id/scanmod"
+        android:layout_marginTop="2dp"
+        android:hint="BetweenScanPeriod/ms"
+        android:inputType="numberDecimal" />
+
+
+
+
+</RelativeLayout>

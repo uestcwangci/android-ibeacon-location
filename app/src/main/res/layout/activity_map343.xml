@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/init_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="initialize" />
+
+        <ToggleButton
+            android:id="@+id/wknn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="wknn"
+            android:textOff="start"
+            android:textOn="stop" />
+
+        <Switch
+            android:id="@+id/kalman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="Kalman\nSwithc"
+            android:textOff="OFF"
+            android:textOn="ON" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/kbmap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/bg"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/loc_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/loc_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="357dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/x"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="X"
+            android:inputType="number|numberDecimal" />
+
+        <EditText
+            android:id="@+id/y"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Y"
+            android:inputType="number|numberDecimal" />
+
+        <Button
+            android:id="@+id/test_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="test_BT"
+            tools:layout_editor_absoluteX="246dp"
+            tools:layout_editor_absoluteY="334dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="FrameInfo"
+        android:textSize="20sp" />
+
+
+
+</LinearLayout>
+
+
