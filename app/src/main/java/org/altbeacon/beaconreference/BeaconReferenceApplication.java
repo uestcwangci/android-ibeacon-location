@@ -70,7 +70,7 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 
         // 设置为前台服务
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setSmallIcon(R.drawable.launcher_loc);
         builder.setContentTitle("Scanning for Beacons");
         Intent intent = new Intent(this, MonitoringActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -116,9 +116,9 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 
         Log.d(TAG, "setting up background monitoring for beacons and power saving");
         // wake up the app when a beacon is seen
-        Region region = new Region("backgroundRegion",
-                null, null, null);
-        regionBootstrap = new RegionBootstrap(this, region);
+//        Region region = new Region("backgroundRegion",
+//                null, null, null);
+//        regionBootstrap = new RegionBootstrap(this, region);
 
         // simply constructing this class and holding a reference to it in your custom Application
         // class will automatically cause the BeaconLibrary to save battery whenever the application
@@ -192,7 +192,7 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
                 new NotificationCompat.Builder(this)
                         .setContentTitle("Beacon Reference Application")
                         .setContentText("An beacon is nearby.")
-                        .setSmallIcon(R.drawable.ic_launcher);
+                        .setSmallIcon(R.drawable.launcher_loc);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntent(new Intent(this, MonitoringActivity.class));

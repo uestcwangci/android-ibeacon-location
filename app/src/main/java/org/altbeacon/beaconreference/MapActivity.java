@@ -91,6 +91,7 @@ public class MapActivity extends Activity implements BeaconConsumer {
     private static final int L = 5;// 窗口长度，在线定位L个点合作一个点
     private static final double RSSI_WEIGHT = 0.5;
 
+
     private Map<double[], Map<String, Double>> fingerMap;
     private Map<String, LinkedList<Integer>> uuid4rssi_scanAll;
 
@@ -295,19 +296,14 @@ public class MapActivity extends Activity implements BeaconConsumer {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.init_bt:
-                    initSys();
-                    break;
-                case R.id.test_bt:
-                    TranslateAnimation animation = new TranslateAnimation(
-                            (float) 0, (float) (4.6 * perW - iconW / 2), (float) 0, (float) (1.0 * perH - iconH / 2));
-                    animation.setDuration(100); // 移动时间
-                    animation.setFillAfter(true);// 移动后停留
-                    locIcon.startAnimation(animation);
-                    break;
-                default:
-                    break;
+            if (v.getId() == R.id.init_bt) {
+                initSys();
+            } else if (v.getId() == R.id.init_bt) {
+                TranslateAnimation animation = new TranslateAnimation(
+                        (float) 0, (float) (4.6 * perW - iconW / 2), (float) 0, (float) (1.0 * perH - iconH / 2));
+                animation.setDuration(100); // 移动时间
+                animation.setFillAfter(true);// 移动后停留
+                locIcon.startAnimation(animation);
             }
         }
     }
@@ -518,8 +514,8 @@ public class MapActivity extends Activity implements BeaconConsumer {
     private double[] kalNextP = new double[]{1, 1};//X、Y方向后验估计的方差
 
     private void kalmanFilter(double[] last, double[] cur) {
-        double R = 5;// R测量方差，反应当前的测量精度
-        double Q = 2;// Q过程方差，反应连续两个时刻数据方差
+        double R = 0.0002;// R测量方差，反应当前的测量精度
+        double Q = 0.004;// Q过程方差，反应连续两个时刻数据方差
         double K;// 卡尔曼增益，反应了测量结果与过程模型（即当前时刻与下一时刻位置相同这一模型）的可信程度
         for (int i = 0; i < cur.length; i++) {
             double currentX = cur[i];// currentX是当前值，和真实值的存在一定高斯噪声误差

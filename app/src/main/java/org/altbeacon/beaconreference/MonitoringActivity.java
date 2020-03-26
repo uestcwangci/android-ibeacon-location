@@ -49,8 +49,13 @@ public class MonitoringActivity extends Activity  {
 		ScanPeriod = findViewById(R.id.ScanPeriod);
 		scanmod = findViewById(R.id.scanmod);
 		BetweenScanPeriod = findViewById(R.id.BetweenScanPeriod);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
+		checkPermission();
+
+	}
+
+	private void checkPermission() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			// Android M Permission check
 			String[] permissions = new String[]{
 					Manifest.permission.ACCESS_COARSE_LOCATION,
 					Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -60,30 +65,30 @@ public class MonitoringActivity extends Activity  {
 			};
 			// 检查是否有相应的权限
 			boolean isAllGranted = checkPermissionAllGranted(permissions);
-            if (!isAllGranted) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("This app needs location access");
-                builder.setMessage("Please grant location access so this app can detect beacons in the background.");
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+			if (!isAllGranted) {
+				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle("This app needs location access");
+				builder.setMessage("Please grant location access so this app can detect beacons in the background.");
+				builder.setPositiveButton(android.R.string.ok, null);
+				builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
-                    @TargetApi(23)
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{
-                        				Manifest.permission.ACCESS_COARSE_LOCATION,
+					@TargetApi(23)
+					@Override
+					public void onDismiss(DialogInterface dialog) {
+						requestPermissions(new String[]{
+										Manifest.permission.ACCESS_COARSE_LOCATION,
 										Manifest.permission.READ_EXTERNAL_STORAGE,
 										Manifest.permission.WRITE_EXTERNAL_STORAGE,
 										Manifest.permission.ACCESS_FINE_LOCATION},
-                                PERMISSION_REQUEST_COARSE_LOCATION);
-                    }
+								PERMISSION_REQUEST_COARSE_LOCATION);
+					}
 
-                });
-                builder.show();
-            }
-        }
-
+				});
+				builder.show();
+			}
+		}
 	}
+
 	/**
 	 * 检查是否拥有指定的所有权限
 	 */

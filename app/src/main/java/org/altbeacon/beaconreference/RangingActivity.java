@@ -163,6 +163,8 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 //        startTime = System.currentTimeMillis();
     }
 
+
+
     @Override
     public void onBeaconServiceConnect() {
         RangeNotifier rangeNotifier = new RangeNotifier() {
