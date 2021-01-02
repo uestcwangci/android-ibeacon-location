@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import android.app.Activity;
 
@@ -19,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -37,27 +39,31 @@ public class RangingActivity extends Activity implements BeaconConsumer {
     private int x;
     private int time;
     private int y;
+    private int major, minor;
+    private String uuid;
     private SQLiteDatabase db;
 //    private long startTime;
     private int count;
     private int scanmod;
     private int period;
     private int betweenPriod;
-    private Map<String, Integer> uuid4rssi_WeNeed = new HashMap<>();
+//    private Map<String, Integer> uuid4rssi_WeNeed = new HashMap<>();
+    private Map<String, Integer> mm4rssi_WeNeed = new HashMap<>();
     private boolean flag = false;
     //private Map<String, Integer> uuid4rssi;
 //    private Map<String, Double> uuid4dis;
 //    private Map<String, String> uuid4name;
     private Ringtone mRingtone;
 
-    private Set<String> uuids;
+//    private Set<String> uuids;
+    private Set<String> majorAndMinor;
 
     private Region mRegion;
 
     private void initMap() {
-        for (String uuid : uuids) {
+        for (String mm : majorAndMinor) {
             //uuid4rssi.put(uuid,-100);
-            uuid4rssi_WeNeed.put(uuid,-100);
+            mm4rssi_WeNeed.put(mm,-100);
 //            uuid4dis.put(uuid, 0.0);
         }
     }
@@ -74,6 +80,9 @@ public class RangingActivity extends Activity implements BeaconConsumer {
             x = intent.getIntExtra("x", 0);
             time = Integer.parseInt(intent.getStringExtra("times"));
             y = intent.getIntExtra("y", 0);
+            major = intent.getIntExtra("major", 0);
+            minor = intent.getIntExtra("minor", 0);
+            uuid = intent.getStringExtra("uuid");
             period = intent.getIntExtra("period",150);
             betweenPriod = intent.getIntExtra("betweenPeriod",0);
             scanmod = intent.getIntExtra("scanmod",1);
@@ -87,7 +96,8 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
         //uuid4rssi = new HashMap<>();
 //        uuid4dis = new HashMap<>();
-        uuids = new TreeSet<>(); // 存储顺序与字段大小有关
+//        uuids = new TreeSet<>(); // 存储顺序与字段大小有关
+        majorAndMinor = new TreeSet<>(); // 存储顺序与字段大小有关
 
 //        uuid4name.put("13fda506-93a4-e24f-b1af-cfc6eb076401", "ble1");
 //        uuid4name.put("13fda506-93a4-e24f-b1af-cfc6eb076402", "ble2");
@@ -95,32 +105,34 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         // TODO UUID
         //uuids.add("13fda506-93a4-e24f-b1af-cfc6eb076401");
         //uuids.add("13fda506-93a4-e24f-b1af-cfc6eb076402");
-        //uuids.add("13fda506-93a4-e24f-b1af-cfc6eb076404");
-        if (scanmod == 0) {
-            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109601");
-            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109602");
-            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109603");
-        }
-        if (scanmod == 1) {
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647821");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647822");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647823");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647824");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647825");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647826");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647827");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647828");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647829");
-        }if (scanmod == 2) {
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640016");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640024");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640026");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640031");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640011");
-            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640046");
-        }
+        //uuids.add  if (scanmod == 0) {
+        ////            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109601");
+        ////            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109602");
+        ////            uuids.add("e2c56db5-dffb-48d2-b060-d0f5a7109603");
+        ////        }
+        ////        if (scanmod == 1) {
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647821");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647822");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647823");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647824");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647825");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647826");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647827");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647828");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07647829");
+        ////        }if (scanmod == 2) {
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640016");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640024");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640026");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640031");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640011");
+        ////            uuids.add("fda50693-a4e2-4fb1-afcf-c6eb07640046");
+        ////        }("13fda506-93a4-e24f-b1af-cfc6eb076404");
+//
+        // TODO 添加你设定的major和minor
+        majorAndMinor.add("1,1");
+        majorAndMinor.add("1,2");
 
-        Log.e("uuids",uuids.toString());
 //        beaconManager.setBackgroundScanPeriod(period);
 //        beaconManager.setBackgroundBetweenScanPeriod(betweenPriod);
 //        beaconManager.setForegroundBetweenScanPeriod(betweenPriod);
@@ -189,23 +201,26 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                     Log.e("count", String.valueOf(count));
                     initMap();
                     if (beacons.size() > 0) {
+                        StringBuilder sb = new StringBuilder();
                         for (Beacon beacon : beacons) {
                             // TODO filter beacons
                             Log.d(TAG, "rssi:" + beacon.getRssi());
-                            String uuid = beacon.getId1().toString();
-                            int rssi = beacon.getRssi();
+                            String uuidTemp = beacon.getId1().toString();
+                            if (!TextUtils.isEmpty(uuid) && uuid.equals(uuidTemp)) {
+                                String mm = beacon.getId1().toString() + beacon.getId2().toString();
+                                mm4rssi_WeNeed.put(mm, beacon.getRssi());
+                                sb.append("(").append(beacon.getId2()).append(", ").append(beacon.getId3()).append(")");
+                            }
 //                       Log.d(TAG, "rssi Ave :" + beacon.getRunningAverageRssi());
 //                       uuid4rssi.put(beacon.getId1().toString(), beacon.getRssi());
 //                       uuid4dis.put(beacon.getId1().toString(), beacon.getDistance());
                             Log.e("uuid", uuid);
-                            if (uuids.contains(uuid)) {
-                                uuid4rssi_WeNeed.put(uuid, rssi);
-                            }
                         }
-                        Beacon firstBeacon = beacons.iterator().next();
-                        logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
+//                        Beacon firstBeacon = beacons.iterator().next();
+//                        logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
+                        logToDisplay(sb.toString());
                     }
-                    Log.e("data",uuid4rssi_WeNeed.toString());
+                    Log.e("data",mm4rssi_WeNeed.toString());
                     insertDB(x, y);
 //                  Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  "+beacons.size());
                     //Beacon firstBeacon = beacons.iterator().next();
@@ -236,8 +251,8 @@ public class RangingActivity extends Activity implements BeaconConsumer {
 
     private void createTable(SQLiteDatabase db) {
         StringBuilder APBuilder = new StringBuilder();
-        for (String uuid : uuids) {
-            APBuilder.append("\"").append(uuid).append("\"");
+        for (String mm : majorAndMinor) {
+            APBuilder.append("\"").append(mm).append("\"");
             //APBuilder.append(uuid);
             APBuilder.append(" smallint,");
         }
@@ -268,7 +283,7 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         ContentValues cValue = new ContentValues();
         cValue.put("x", x);
         cValue.put("y", y);
-        for (Map.Entry<String, Integer> entry : uuid4rssi_WeNeed.entrySet()) {
+        for (Map.Entry<String, Integer> entry : mm4rssi_WeNeed.entrySet()) {
             cValue.put("\""+entry.getKey()+"\"", entry.getValue());
         }
         cValue.put("date", dateStr);

@@ -37,6 +37,7 @@ public class MonitoringActivity extends Activity  {
 	EditText scanmod;
 	EditText ScanPeriod;
 	EditText BetweenScanPeriod;
+	EditText editUUID;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
@@ -46,9 +47,10 @@ public class MonitoringActivity extends Activity  {
 		editX = findViewById(R.id.x);
 		editTimes = findViewById(R.id.times);
 		editY = findViewById(R.id.y);
-		ScanPeriod = findViewById(R.id.ScanPeriod);
-		scanmod = findViewById(R.id.scanmod);
-		BetweenScanPeriod = findViewById(R.id.BetweenScanPeriod);
+		editUUID = findViewById(R.id.uuid);
+//		ScanPeriod = findViewById(R.id.ScanPeriod);
+//		scanmod = findViewById(R.id.scanmod);
+//		BetweenScanPeriod = findViewById(R.id.BetweenScanPeriod);
 		checkPermission();
 
 	}
@@ -133,6 +135,7 @@ public class MonitoringActivity extends Activity  {
 		myIntent.putExtra("x", Integer.parseInt(editX.getText().toString()));
 		myIntent.putExtra("times", editTimes.getText().toString());
 		myIntent.putExtra("y", Integer.parseInt(editY.getText().toString()));
+		myIntent.putExtra("uuid", editUUID.getText().toString());
 //		myIntent.putExtra("period",Integer.parseInt(ScanPeriod.getText().toString()));
 //		myIntent.putExtra("scanmod",Integer.parseInt(scanmod.getText().toString()));
 //		myIntent.putExtra("betweenPeriod",Integer.parseInt(BetweenScanPeriod.getText().toString()));
